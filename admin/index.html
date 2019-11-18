@@ -54,5 +54,32 @@
 
         </div>
     </div>
+    <script>
+        // 页面一加载就发送ajax请求获取用户信息
+
+        // 入口函数
+        $(function () {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/admin/user/info',
+                type: 'get',
+                success: function (res) {
+                    console.log(res);
+                    $('.user_info>img').attr(res.data.userPic);
+                    $('.user_info>span').html('欢迎&nbsp;&nbsp;' + res.data.nickname);
+                    $('.user_center_link>img').attr(res.data.userPic)
+                }
+            })
+
+        })
+        // 退出登录
+        $('.logout').click(function () {
+            //2.1 删除token
+            localStorage.removeItem('token');
+            //2.2 跳转登录页
+            window.location.href = './login.html';
+        })
+
+    </script>
 </body>
+
 </html>

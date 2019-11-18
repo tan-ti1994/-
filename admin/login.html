@@ -81,7 +81,6 @@
         // 4非空判断
         if (usrename === '' || password === '') {
           // alert('用户名和密码不能为空');
-
           $('.modal-body').text('请输入用户名和密码');
           $('#myModal').modal();
           return
@@ -101,8 +100,11 @@
             if (res.code === 200) {
               $('.modal-body').text(res.msg);
               $('#myModal').modal();
-              // 跳转首页
+
               $('#myModal').on('hidden.bs.modal', function (e) {
+                // 将服务器返回的token存入localStorage
+                localStorage.setItem('token', res.token)
+                // 跳转首页
                 window.location.href = './index.html';
               })
             } else {
