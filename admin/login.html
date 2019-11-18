@@ -37,6 +37,30 @@
       </form>
     </div>
   </div>
+
+  <!-- 使用模态框提示用户 -->
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <script>
     //  入口函数
     $(function () {
@@ -56,7 +80,10 @@
         var password = $('.input_pass').val().trim();
         // 4非空判断
         if (usrename === '' || password === '') {
-          alert('用户名和密码不能为空');
+          // alert('用户名和密码不能为空');
+
+          $('.modal-body').text('请输入用户名和密码');
+          $('#myModal').modal();
           return
         };
         // 5.发ajax请求
@@ -68,13 +95,19 @@
             password: password
           },
           success: function (res) {
-            console.log(res);
+
+            // console.log(res);
             // 判断响应结果:A成功:跳转管理系统首页   B失败:提示用户
             if (res.code === 200) {
+              $('.modal-body').text(res.msg);
+              $('#myModal').modal();
               // 跳转首页
-              window.location.href = './index.html';
+              $('#myModal').on('hidden.bs.modal', function (e) {
+                window.location.href = './index.html';
+              })
             } else {
-              alert(res.msg)
+              $('.modal-body').text(res.msg);
+              $('#myModal').modal();
 
             }
           }
