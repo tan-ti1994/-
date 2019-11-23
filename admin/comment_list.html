@@ -194,7 +194,7 @@
   <script>
 
     $(function () {
-      // 页面已加载就需获取评论数据在页面
+      // 页面一加载就需获取评论数据在页面
       var mypage = 1;
       var perpage = 10;
       $.get({
@@ -209,7 +209,7 @@
             var htmlstr = template('arr-list', res)
             $('tbody').html(htmlstr)
 
-            // 添加分页
+            // 添加分页(插件)
 
             $('#pagination').twbsPagination({
               totalPages: res.data.totalPage,
@@ -297,7 +297,8 @@
 
           },
           success: function (res) {
-            console.log(res);
+
+            // 从新加载数据
             $.get({
               url: BigNew.comment_list,
               data: {
@@ -328,6 +329,7 @@
               id: id
             },
             success: function (res) {
+              // 从新加载数据
               $.get({
                 url: BigNew.comment_list,
                 data: {
@@ -341,7 +343,7 @@
 
                     var htmlStr = template('arr-list', res);
                     $('tbody').html(htmlStr);
-
+                    // 当没有数据的时候跳转第一页
                     if (res.data.data.length === 0) {
                       $('#pagination').twbsPagination('changeTotalPages', res.data.totalPage, 1);
                     }
